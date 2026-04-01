@@ -1,0 +1,46 @@
+{
+    "name": "social",
+    "version": "1.0.0",
+    "main": "dist/server.js",
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "start": "node dist/server.js",
+        "start:prod": "node dist/db/run.migrations.js && node dist/server.js",
+        "start:dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "dotenv": "^17.3.1",
+        "bcryptjs": "^3.0.3",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.15.1",
+        "cors": "^2.8.6",
+        "express": "^5.2.1",
+        "helmet": "^8.1.0",
+        "jsonwebtoken": "^9.0.3",
+        "morgan": "^1.10.1",
+        "mysql2": "^3.20.0",
+        "reflect-metadata": "^0.2.2",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1",
+        "typeorm": "^0.3.28",
+        "zod": "^4.3.6"
+    },
+    "devDependencies": {
+        "@types/bcryptjs": "^2.4.6",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.6",
+        "@types/jsonwebtoken": "^9.0.10",
+        "@types/morgan": "^1.9.10",
+        "@types/node": "^25.5.0",
+        "@types/supertest": "^7.2.0",
+        "@types/swagger-jsdoc": "^6.0.4",
+        "@types/swagger-ui-express": "^4.1.8",
+        "nodemon": "^3.1.14",
+        "ts-node": "^10.9.2",
+        "typescript": "^6.0.2"
+    }
+}

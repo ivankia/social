@@ -1,0 +1,58 @@
+services:
+    mariadb:
+        image: mariadb:11.4
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: social
+            MYSQL_USER: social
+            MYSQL_PASSWORD: social
+            MYSQL_ROOT_PASSWORD: root_password
+        command:
+            - '--character-set-server=utf8mb4'
+            - '--collation-server=utf8mb4_unicode_ci'
+        volumes:
+            - mariadb_data:/var/lib/mysql
+        ports:
+            - '3306:3306'
+        networks:
+            - app-network
+        healthcheck:
+            test:
+                [
+                    'CMD-SHELL',
+                    'mariadb-admin ping -h 127.0.0.1 -u${MYSQL_USER} -p${MYSQL_PASSWORD}',
+                ]
+            interval: 5s
+            timeout: 3s
+            retries: 20
+
+    api:
+        build: .
+        restart: unless-stopped
+        depends_on:
+            mariadb:
+                condition: service_healthy
+        environment:
+            PORT: '3000'
+            DB_HOST: 'mariadb'
+            DB_PORT: '3306'
+            DB_USER: 'social'
+            DB_PASSWORD: 'social'
+            DB_NAME: 'social'
+            JWT_ACCESS_TTL_SECONDS: '900'
+            JWT_REFRESH_TTL_SECONDS: '604800'
+            JWT_ACCESS_SECRET: 'access_secret_qy3d34yny34rc1'
+            JWT_REFRESH_SECRET: 'refresh_secret_wqc98y30ny48'
+            LOG_LEVEL: 'error'
+        ports:
+            - '3000:3000'
+        networks:
+            - app-network
+
+volumes:
+    mariadb_data:
+        driver: local
+
+networks:
+    app-network:
+        driver: bridge
