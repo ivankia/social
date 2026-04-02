@@ -18,8 +18,6 @@ export class UserService {
         const username = user.username;
         const email = user.email;
 
-        console.log('User found:', user);
-
         const limit = 3;
         const repo = AppDataSource.getRepository(Post);
 
@@ -32,8 +30,6 @@ export class UserService {
                 'p.createdAt AS p_createdAt',
                 'p.updatedAt AS p_updatedAt',
                 'u.id AS u_id',
-                'u.username AS u_username',
-                'u.email AS u_email',
             ])
             .where('u.id = :id', { id })
             .orderBy('p.createdAt', 'DESC')
@@ -46,8 +42,6 @@ export class UserService {
             p_createdAt: string | Date;
             p_updatedAt: string | Date;
             u_id: string;
-            u_username: string;
-            u_email: string;
         }>();
 
         const posts: UserPosts[] = rows.map((r) => ({
