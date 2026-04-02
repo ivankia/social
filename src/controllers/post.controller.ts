@@ -32,6 +32,7 @@ export class PostController {
         const input = { limit: parsed.limit } as const;
         const postInput: Parameters<PostService['listPosts']>[0] = {
             ...input,
+            // limit: parsed.limit,
         };
         if (postCreatedAt) postInput.post_created_at = postCreatedAt;
         if (parsed.post_id) postInput.post_id = parsed.post_id;
